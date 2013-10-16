@@ -1771,6 +1771,21 @@
                     complete: win_end_wait
                 });
             }
+        }),
+        search: fn.page.expand('搜索配件', 'search', {
+            init: function () {
+                if (this.base('init')) return true;
+                var page_elt = this.elt();
+                page_elt.delegate('a[data-fun]:not(.disabled)', 'click', this, function (e) {
+                    var tgt = $(e.currentTarget);
+                    switch (tgt.attr('data-fun')) {
+                        case 'search':
+
+                            break;
+                    }
+                });
+                return false;
+            }
         })
     };
     var cfg = {
