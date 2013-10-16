@@ -43,7 +43,7 @@
                         <div class="l1">
                             <a class="l1">汽车配件查询</a>
                             <div class="l2">
-                                <a>按车型查询配件</a>
+                                <a data-name="search">按车型查询配件</a>
                                 <a>按车架号询配件</a>
                                 <a>按配件编码查询</a>
                                 <a>按车辆型号查询</a>
@@ -358,6 +358,33 @@
                                     <a class="btn s2" data-fun="save">保存到服务器</a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="page search" style="display: none;">
+                            <div class="type">
+                                <div class="tab">
+                                    <a class="by-xilie active">按车型查询</a>
+                                    <a class="by-vin">按车架号查询</a>
+                                    <a class="by-peijian-code">按配件编码查询</a>
+                                    <a class="by-chexin-code">按型号编码查询</a>
+                                </div>
+                                <div class="tab-panel">
+                                    <div class="by-xilie">
+                                        <table style="width: 100%;" class="fenlei-sel">
+                                            <tbody>
+                                                <tr class="rs1">
+                                                    <td><a class="btn s1 sel" style="display: block;" data-fun="guobie-sel" data-empty="请选择国别"><span class="value">请选择国别</span><span class="flag"></span></a></td>
+                                                    <td><a class="btn s1 sel disabled" style="display: block;" data-fun="pinpai-sel" data-empty="请选择品牌"><span class="value">请选择品牌</span><span class="flag"></span></a></td>
+                                                    <td><a class="btn s1 sel disabled" style="display: block;" data-fun="xilie-sel" data-empty="请选择系列"><span class="value">请选择系列</span><span class="flag"></span></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="by-vin"></div>
+                                    <div class="by-peijian-code"></div>
+                                    <div class="by-chexin-code"></div>
+                                </div>
+                            </div>
+                            <div class="b1"></div>
                         </div>
                     </td>
                 </tr>

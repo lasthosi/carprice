@@ -1777,15 +1777,58 @@
                 if (this.base('init')) return true;
                 var page_elt = this.elt();
                 page_elt.delegate('a[data-fun]:not(.disabled)', 'click', this, function (e) {
-                    var tgt = $(e.currentTarget);
+                    var tgt = $(e.currentTarget), page = e.data;
                     switch (tgt.attr('data-fun')) {
                         case 'search':
 
                             break;
+                        case 'guobie-sel':
+                            fn.fenlei.selectDlg(tgt, fn.fenlei.guobie.data);
+                            break;
+                        case 'pinpai-sel':
+                            fn.fenlei.selectDlg(tgt, fn.fenlei.pinpai.data[page.guobie_current()]);
+                            break;
+                        case 'xilie-sel':
+                            fn.fenlei.selectDlg(tgt, fn.fenlei.xilie.data[page.pinpai_current()]);
+                            break;
                     }
                 });
+                page_elt.find('.fenlei-sel:first').delegate('a.btn.sel', '_change', this, function (e, data) {
+                    var a = $(e.currentTarget), page = e.data;
+                    switch (a.attr('data-fun')) {
+                        case 'guobie-sel':
+                            na = $(e.delegateTarget).find('a[data-fun="pinpai-sel"]:first');
+                            var selected = fn.selectButton.val(a);
+                            fn.disable(na, !selected);
+                            fn.selectButton.val(na, '');
+                            if (selected) {
+                                fn.fenlei.pinpai.load(parseInt(selected));
+                            }
+                            break;
+                        case 'pinpai-sel':
+                            na = $(e.delegateTarget).find('a[data-fun="xilie-sel"]:first');
+                            var selected = fn.selectButton.val(a);
+                            fn.disable(na, !selected);
+                            fn.selectButton.val(na, '');
+                            if (selected) {
+                                selected = parseInt(selected);
+                                fn.fenlei.xilie.load(parseInt(selected));
+                            }
+                            break;
+                        case 'xilie-sel':
+                            var selected = fn.selectButton.val(a);
+                            if (selected) {
+                                //page.load();
+                            }
+                            break;
+                    }
+                });
+                page_elt.children('div.type').children('div.tab').delegate('a', 'click', fn.tab.on_active);
                 return false;
-            }
+            },
+            guobie_current: fn.fenlei.guobie.current,
+            pinpai_current: fn.fenlei.pinpai.current,
+            xilie_current: fn.fenlei.xilie.current
         })
     };
     var cfg = {
@@ -1847,5 +1890,6 @@
         $('html').delegate('input', 'focusin', fn.input.onerror);
         fn.fenlei.guobie.load();
         fn.peijian.dict.load();
+        $('body').append('<span>' + parseInt('1111111111111111111111111111111111111111111111111111111111111111', 2) + '</span>');
     });
 })();
