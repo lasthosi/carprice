@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>首页　jquery 学习</title>
+    <link href="style/edit.css" rel="stylesheet" media="screen" />
+    <script src="js/jquery.js"></script>
+    <style>
+        table {
+            width: 100%;
+            table-layout: fixed;
+            border: none;
+            border-collapse: collapse;
+        }
+
+            table td {
+                text-align: center;
+                height: 26px;
+                font-size: 14px;
+                vertical-align: middle;
+                border: solid 1px #ccc;
+                background-color: #FFFFFF;
+            }
+    </style>
+</head>
+<body style="display: block;">
+    <table>
+        <tr>
+            <td></td>
+            <td style="width:800px;">
+                <div style="position: relative; top: -1px; overflow: hidden; _zoom: 1;">
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <td style="width: 90px;">ID</td>
+                                <td style="width: 400px;">国别名称</td>
+                                <td style="width: 60px;">排序</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr data-state="1">
+                                <td class="s_cm" data-pkey="id">new1</td>
+                                <td class="s_lm itxt">
+                                    <input type="text" data-name="name" data-old="新国别请修改名称"></td>
+                                <td data-name="sort" class="s_cm" data-old="1">1</td>
+                                <td class="tool s_cm"><a class="btn s1">&nbsp;↑&nbsp;</a><a class="btn s1">&nbsp;↓&nbsp;</a><a class="btn s2 disabled">取消修改</a><a class="btn s3">删除</a></td>
+                            </tr>
+
+                            <tr data-state="1">
+                                <td class="s_cm" data-pkey="id">new2</td>
+                                <td class="s_lm itxt">
+                                    <input type="text" data-name="name" data-old="新国别请修改名称"></td>
+                                <td data-name="sort" class="s_cm" data-old="2">2</td>
+                                <td class="tool s_cm"><a class="btn s1">&nbsp;↑&nbsp;</a><a class="btn s1">&nbsp;↓&nbsp;</a><a class="btn s2 disabled">取消修改</a><a class="btn s3">删除</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

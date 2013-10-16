@@ -1,0 +1,14 @@
+﻿html, body {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    font-size: 14px;
+    font-family: SimSun, Arial, Helvetica, sans-serif;
+    line-height: 1;
+}
+
+p {
+    margin: 0em;
+    padding: 0px;
+    line-height: 1;
+}

@@ -1,0 +1,13 @@
+﻿body {
+    background-color: #fbfbfb;
+}
+
+#edit {
+    border: none;
+    display: block;
+    width: 800px;
+    height: 500px;
+    margin: auto;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 6px;
+}

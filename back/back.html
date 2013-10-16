@@ -1,0 +1,537 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>汽车配件查询系统后台</title>
+    <link href="style/back.css" rel="stylesheet" media="screen" />
+    <script src="/js/jquery.js"></script>
+    <script src="/js/json2.js"></script>
+    <script src="/js/mousewheel.js"></script>
+    <script src="js/back.js"></script>
+</head>
+<body>
+    <div id="head">
+        <div id="head-in">
+            <div id="tab-panel">
+                <a class="tab active"><span id="app-title"></span><span class="lt"></span><span class="rt"></span></a>
+                <div class="vr1"></div>
+                <a class="tab">关于我们<span class="lt"></span><span class="rt"></span></a>
+                <div class="vr2"></div>
+                <a class="tab">联系我们<span class="lt"></span><span class="rt"></span></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="body" style="height: 100%; margin: 0px; padding: 0px; position: relative; overflow: auto; overflow-y: scroll;">
+        <div id="frame-container"></div>
+        <div id="client_w" style="height: 0px; margin: 0px; padding: 0px; overflow: hidden;"></div>
+        <table class="body">
+            <tbody>
+                <tr>
+                    <td id="menu">
+                        <div class="l1">
+                            <a class="l1">用户帐号信息</a>
+                            <div class="l2">
+                                <a>管理员信息</a>
+                                <a>财务帐号</a>
+                                <a>注册用户管理</a>
+                                <a>供货商名录</a>
+                                <a>采购商名录</a>
+                            </div>
+                        </div>
+                        <div class="l1">
+                            <a class="l1">汽车配件查询</a>
+                            <div class="l2">
+                                <a>按车型查询配件</a>
+                                <a>按车架号询配件</a>
+                                <a>按配件编码查询</a>
+                                <a>按车辆型号查询</a>
+                            </div>
+                        </div>
+                        <div class="l1">
+                            <a class="l1">汽车配件管理</a>
+                            <div class="l2">
+                                <a data-name="car_fenlei_m">汽车分类管理</a>
+                                <a data-name="vin_m">车架号VIN管理</a>
+                                <a data-name="peijian_dict_m">配件字典库管理</a>
+                                <a data-name="pinpai_peijian_m">品牌配件库管理</a>
+                                <a data-name="xilie_peijian_m">车系配件库管理</a>
+                                <a>销售开单管理</a>
+                            </div>
+                        </div>
+                        <div class="l1">
+                            <a class="l1">留言/询价</a>
+                            <div class="l2">
+                                <a>发送留言</a>
+                                <a>收到留言</a>
+                                <a>公告信息</a>
+                                <a>安全退出</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td id="content">
+                        <div class="page car_fenlei_m">
+                            <table style="width: 100%;" class="fenlei-sel">
+                                <tbody>
+                                    <tr class="rs1">
+                                        <td><a class="btn s1 sel" style="display: block;" data-fun="guobie-sel" data-empty="请选择国别"><span class="value">请选择国别</span><span class="flag"></span></a></td>
+                                        <td><a class="btn s1 sel disabled" style="display: block;" data-fun="pinpai-sel" data-empty="请选择品牌"><span class="value">请选择品牌</span><span class="flag"></span></a></td>
+                                        <td><a class="btn s1 sel disabled" style="display: block;" data-fun="xilie-sel" data-empty="请选择系列"><span class="value">请选择系列</span><span class="flag"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="b1">
+                                <div class="tab"><a class="active guobie">国别管理</a><a class="disabled pinpai">品牌管理</a><a class="disabled xilie">车系管理</a><a class="disabled chexin">车型管理</a></div>
+                                <div class="tab-panel">
+                                    <div class="guobie">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 400px;">国别名称</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="guobie-add">添加</a>
+                                            <a class="btn s2" data-fun="guobie-save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                    <div class="pinpai" style="display: none;">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 136px;">名称</td>
+                                                    <td style="width: 50px;" title="VIN代码中的品牌代码部分">代码</td>
+                                                    <td style="width: 500px;">VIN定义，按下列顺序指定每项的[开始位置][字符数]。<br />
+                                                        3系列,4车身,5安全,6引擎,7变速箱</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="pinpai-add">添加</a>
+                                            <a class="btn s2" data-fun="pinpai-save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                    <div class="xilie" style="display: none;">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 300px;">系列名称</td>
+                                                    <td style="width: 200px;">系列代码（VIN）</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="xilie-add">添加</a>
+                                            <a class="btn s2" data-fun="xilie-save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                    <div class="chexin" style="display: none;">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 32em;">车型名称</td>
+                                                    <td style="width: 16em;">车型代号</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="chexin-add">添加</a>
+                                            <a class="btn s2" data-fun="chexin-save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page vin_m" style="display: none;">
+                            <table style="width: 100%;" class="fenlei-sel">
+                                <tbody>
+                                    <tr class="rs1">
+                                        <td><a class="btn s1 sel" style="display: block;" data-fun="guobie-sel" data-empty="请选择国别"><span class="value">请选择国别</span><span class="flag"></span></a></td>
+                                        <td><a class="btn s1 sel disabled" style="display: block;" data-fun="pinpai-sel" data-empty="请选择品牌"><span class="value">请选择品牌</span><span class="flag"></span></a></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="rem">
+                                <p>VIN选项不能重复，添加重复的值时，后续的重复值会被自动丢弃。</p>
+                            </div>
+                            <div class="b1" style="display: none;">
+                                <div class="tab"><a class="bodywork active">车身结构</a><a class="sc">安全结构</a><a class="egnum">引擎编号</a><a class="trnum">变速箱号</a><a class="pofp">生产产地</a></div>
+                                <div class="tab-panel">
+                                    <div class="bodywork" data-field="bodywork">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 180px;">选项代码</td>
+                                                    <td style="width: 480px;">选项含义</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="add">添加</a>
+                                            <a class="btn s2" data-fun="save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                    <div class="sc" data-field="sc" style="display: none;">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 180px;">选项代码</td>
+                                                    <td style="width: 480px;">选项含义</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="add">添加</a>
+                                            <a class="btn s2" data-fun="save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                    <div class="egnum" data-field="egnum" style="display: none;">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 180px;">选项代码</td>
+                                                    <td style="width: 480px;">选项含义</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="add">添加</a>
+                                            <a class="btn s2" data-fun="save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                    <div class="trnum" data-field="trnum" style="display: none;">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 180px;">选项代码</td>
+                                                    <td style="width: 480px;">选项含义</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="add">添加</a>
+                                            <a class="btn s2" data-fun="save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                    <div class="pofp" data-field="pofp" style="display: none;">
+                                        <table class="list">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 42px;">状态</td>
+                                                    <td style="width: 180px;">选项代码</td>
+                                                    <td style="width: 480px;">选项含义</td>
+                                                    <td>操作</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="tool">
+                                            <a class="btn s1" data-fun="add">添加</a>
+                                            <a class="btn s2" data-fun="save">保存到服务器</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page peijian_dict_m">
+                            <div class="rem">请注意已经被配件表引用的字典项无法从服务数据库删除。</div>
+                            <div class="tool">
+                                <a class="btn s1" data-fun="hide-all">全部隐藏</a><a class="btn s1" data-fun="show-all">全部显示</a>
+                            </div>
+                            <div class="b1">
+                                <table class="list">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 42px;">状态</td>
+                                            <td style="width: 200px;">名称</td>
+                                            <td style="width: 550px;">备注</td>
+                                            <td>操作</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <div class="tool">
+                                    <a class="btn s1" data-fun="add-class">添加分类</a>
+                                    <a class="btn s2" data-fun="save">保存到服务器</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page pinpai_peijian_m">
+                            <table style="width: 100%;" class="fenlei-sel">
+                                <tbody>
+                                    <tr class="rs1">
+                                        <td><a class="btn s1 sel" style="display: block;" data-fun="guobie-sel" data-empty="请选择国别"><span class="value">请选择国别</span><span class="flag"></span></a></td>
+                                        <td><a class="btn s1 sel disabled" style="display: block;" data-fun="pinpai-sel" data-empty="请选择品牌"><span class="value">请选择品牌</span><span class="flag"></span></a></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="rem">请注意已经被车系配件库引用的项目无法从数据库删除。</div>
+                            <div class="b1" style="display: none;">
+                                <table class="list">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 42px;">状态</td>
+                                            <td style="width: 80px;">图号</td>
+                                            <td style="width: 140px;">名称</td>
+                                            <td style="width: 130px;">编码</td>
+                                            <td style="width: 80px;">4s店价格</td>
+                                            <td style="width: 80px;">原厂价格</td>
+                                            <td style="width: 80px;">副厂价格</td>
+                                            <td style="width: 80px;">拆车价格</td>
+                                            <td style="width: 80px;">维修费</td>
+                                            <td>操作</td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="tool">
+                                    <a class="btn s1" data-fun="add">添加配件</a>
+                                    <a class="btn s2" data-fun="save">保存到服务器</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page xilie_peijian_m">
+                            <table style="width: 100%;" class="fenlei-sel">
+                                <tbody>
+                                    <tr class="rs1">
+                                        <td><a class="btn s1 sel" style="display: block;" data-fun="guobie-sel" data-empty="请选择国别"><span class="value">请选择国别</span><span class="flag"></span></a></td>
+                                        <td><a class="btn s1 sel disabled" style="display: block;" data-fun="pinpai-sel" data-empty="请选择品牌"><span class="value">请选择品牌</span><span class="flag"></span></a></td>
+                                        <td><a class="btn s1 sel disabled" style="display: block;" data-fun="xilie-sel" data-empty="请选择系列"><span class="value">请选择系列</span><span class="flag"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="b1" style="display: none;">
+                                <table class="list">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 42px;">状态</td>
+                                            <td style="width: 80px;">图号</td>
+                                            <td style="width: 140px;">名称</td>
+                                            <td style="width: 130px;">编码</td>
+                                            <td style="width: 80px;">4s店价格</td>
+                                            <td style="width: 80px;">原厂价格</td>
+                                            <td style="width: 80px;">副厂价格</td>
+                                            <td style="width: 80px;">拆车价格</td>
+                                            <td style="width: 80px;">维修费</td>
+                                            <td>操作</td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="tool">
+                                    <a class="btn s1" data-fun="add">添加配件</a>
+                                    <a class="btn s2" data-fun="save">保存到服务器</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="htmlres" style="display: none;">
+        <table>
+            <tbody data-res="guobie-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state"></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="10" data-name="name" /></td>
+                    <td class="tool s_cm"><a class="btn s1" data-fun="sort-up">&nbsp;↑&nbsp;</a><a class="btn s1" data-fun="sort-down">&nbsp;↓&nbsp;</a><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a></td>
+                </tr>
+            </tbody>
+            <tbody data-res="pinpai-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state"></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="10" data-name="name" value="新的品牌" /></td>
+                    <td class="s_lm itxt">
+                        <input class="s_cm" type="text" minlength="3" maxlength="3" data-name="code" value="" /></td>
+                    <td class="s_cm itxt">
+                        <span class="label">系列</span>
+                        <input class="s_cm aw" style="width: 3ex;" type="text" data-type="int" data-min="0" data-max="17" maxlength="2" data-name="series_code_pos" value="0" />
+                        <input class="s_cm aw" style="width: 3ex; border-left: none;" type="text" data-type="int" data-min="0" maxlength="1" data-name="series_code_len" value="0" />
+                        <span class="label">车身</span>
+                        <input class="s_cm aw" style="width: 3ex;" type="text" data-type="int" data-min="0" data-max="17" data-name="bodywork_code_pos" value="0" />
+                        <input class="s_cm aw" style="width: 3ex; border-left: none;" type="text" data-type="int" data-min="0" maxlength="1" data-name="bodywork_code_len" value="0" />
+                        <span class="label">安全</span>
+                        <input class="s_cm aw" style="width: 3ex;" type="text" data-type="int" data-min="0" data-max="17" data-name="sc_code_pos" value="0" />
+                        <input class="s_cm aw" style="width: 3ex; border-left: none;" type="text" data-type="int" data-min="0" maxlength="1" data-name="sc_code_len" value="0" />
+                        <span class="label">引擎</span>
+                        <input class="s_cm aw" style="width: 3ex;" type="text" data-type="int" data-min="0" data-max="17" data-name="egnum_code_pos" value="0" />
+                        <input class="s_cm aw" style="width: 3ex; border-left: none;" type="text" data-type="int" data-min="0" maxlength="1" data-name="egnum_code_len" value="0" />
+                        <span class="label">变速箱</span>
+                        <input class="s_cm aw" style="width: 3ex;" type="text" data-type="int" data-min="0" data-max="17" data-name="trnum_code_pos" value="0" />
+                        <input class="s_cm aw" style="width: 3ex; border-left: none;" type="text" data-type="int" data-min="0" maxlength="1" data-name="trnum_code_len" value="0" />
+                    </td>
+                    <td class="tool s_cm"><a class="btn s1" data-fun="sort-up">&nbsp;↑&nbsp;</a><a class="btn s1" data-fun="sort-down">&nbsp;↓&nbsp;</a><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a><a class="btn s1">编辑VIN字典</a></td>
+                </tr>
+            </tbody>
+            <tbody data-res="xilie-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state"></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="20" data-name="name" /></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="3" data-name="code" /></td>
+                    <td class="tool s_cm"><a class="btn s1" data-fun="sort-up">&nbsp;↑&nbsp;</a><a class="btn s1" data-fun="sort-down">&nbsp;↓&nbsp;</a><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a></td>
+                </tr>
+            </tbody>
+            <tbody data-res="chexin-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state"></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="32" data-name="name" /></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="16" data-name="code" /></td>
+                    <td class="tool s_cm"><a class="btn s1" data-fun="sort-up">&nbsp;↑&nbsp;</a><a class="btn s1" data-fun="sort-down">&nbsp;↓&nbsp;</a><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a></td>
+                </tr>
+            </tbody>
+            <tbody data-res="vin-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state"></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="5" data-name="code" /></td>
+                    <td class="s_lm itxt">
+                        <input type="text" minlength="1" maxlength="32" data-name="value" /></td>
+                    <td class="tool s_cm"><a class="btn s1" data-fun="sort-up">&nbsp;↑&nbsp;</a><a class="btn s1" data-fun="sort-down">&nbsp;↓&nbsp;</a><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a></td>
+                </tr>
+            </tbody>
+            <tbody data-res="peijian-class-row">
+                <tr data-pkey-name="id" class="group">
+                    <td colspan="4">
+                        <div class="row"><span class="state" style="width: 50px;"></span><span>配件分类：</span><input type="text" style="width: 290px; vertical-align: middle;" minlength="1" maxlength="16" data-name="name" /><a class="btn s1" data-fun="sort-up">&nbsp;↑&nbsp;</a><a class="btn s1" data-fun="sort-down">&nbsp;↓&nbsp;</a><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a><a class="btn s1" data-fun="add">添加配件</a><a class="btn s2" data-fun="hide">隐藏列表</a></div>
+                        <table class="list">
+                            <tbody></tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody data-res="peijian-dict-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state" style="width: 42px;"></td>
+                    <td class="s_lm itxt" style="width: 200px;">
+                        <input type="text" minlength="1" maxlength="20" data-name="name" /></td>
+                    <td class="s_lm itxt" style="width: 550px">
+                        <input type="text" maxlength="64" data-name="desc" /></td>
+                    <td class="tool s_cm"><a class="btn s1" data-fun="sort-up">&nbsp;↑&nbsp;</a><a class="btn s1" data-fun="sort-down">&nbsp;↓&nbsp;</a><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a></td>
+                </tr>
+            </tbody>
+            <tbody data-res="pinpai-peijian-class-row">
+                <tr data-pkey-name="id" class="group">
+                    <td colspan="10">
+                        <div class="row">
+                            <a class="btn s2" data-fun="hide">隐藏列表</a><span>分类：</span><span class="label" data-label="class" style="width: 200px;"></span><iframe class="upload" src=""></iframe>
+                        </div>
+                        <table class="list">
+                            <tbody></tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody data-res="pinpai-peijian-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state"></td>
+                    <td class="itxt">
+                        <input type="text" minlength="1" maxlength="5" data-name="num" class="s_cm" /></td>
+                    <td class="s_lm name"></td>
+                    <td class="itxt">
+                        <input type="text" minlength="1" maxlength="16" data-name="code" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_4s" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_of" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_df" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_chop" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_repair" /></td>
+                    <td class="tool s_cm"><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a></td>
+                </tr>
+            </tbody>
+            <tbody data-res="xilie-peijian-class-row">
+                <tr data-pkey-name="id" class="group">
+                    <td colspan="10">
+                        <div class="row">
+                            <a class="btn s2" data-fun="hide">隐藏列表</a><span>分类：</span><span class="label" data-label="class" style="width: 200px;"></span><iframe class="upload" src=""></iframe>
+                        </div>
+                        <table class="list">
+                            <tbody></tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody data-res="xilie-peijian-row">
+                <tr data-pkey-name="id">
+                    <td class="s_cm state"></td>
+                    <td class="itxt">
+                        <input type="text" minlength="1" maxlength="5" data-name="num" class="s_cm" /></td>
+                    <td class="s_lm name"></td>
+                    <td class="itxt">
+                        <input type="text" minlength="1" maxlength="16" data-name="code" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_4s" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_of" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_df" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_chop" /></td>
+                    <td class="itxt">
+                        <input type="text" data-type="int" data-min="1" data-name="price_repair" /></td>
+                    <td class="tool s_cm"><a class="btn s2 disabled" data-fun="restore">撤消</a><a class="btn s3" data-fun="delete">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div data-res="select-dlg">
+            <div class="list"></div>
+        </div>
+        <div data-res="multi-select-dlg">
+            <div class="bg"></div>
+            <div class="v_middle_l"></div>
+            <div class="in v_middle">
+                <div class="tool">
+                    <div class="left"><a data-fun="open-all">全部展开</a><a data-fun="close-all">全部收缩</a></div>
+                    <div class="right"><a data-fun="true">确认</a><a data-fun="hide">取消</a></div>
+                </div>
+                <div class="list"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
