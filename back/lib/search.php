@@ -2,23 +2,20 @@
 function search_help($db,$ids){
 	
 }
-
-function search_help_get_classs($db,$define_ids){
-
-}
-
-function search_by_xilie($db,$xilie_id){
-	$stmt = $db->prepare('SELECT `peijian_id` FROM `chexi_peijian` WHERE `chexi_id`=?');
+function search_xilie_ids($db,$xilie_id,&$list){
+	$stmt = $db->prepare('SELECT `peijian_id`,`define_id` FROM `chexi_peijian` WHERE `chexi_id`=?');
 	$stmt->bind_param('i',$xilie_id);
 	if($r = $stmt->execute()){
-		$stmt->bind_result($id);
-		$ids = array();
+		$stmt->bind_result($id,$define_id);
+		$list = array();
 		while($stmt->fetch()){
-			$ids[]=$id;
+			$list[]=array('id'=>$id,'did'=>$define_id);
 		}
 	}
 	$stmt->close();
-	if(!$r)return $r;
+	return $r;
+}
+function search_by_xilie($db,$xilie_id){
 	
 }
 ?>

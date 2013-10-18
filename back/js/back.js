@@ -1890,6 +1890,5 @@
         $('html').delegate('input', 'focusin', fn.input.onerror);
         fn.fenlei.guobie.load();
         fn.peijian.dict.load();
-        $('body').append('<span>' + parseInt('1111111111111111111111111111111111111111111111111111111111111111', 2) + '</span>');
     });
 })();
