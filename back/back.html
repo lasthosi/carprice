@@ -22,7 +22,6 @@
             </div>
         </div>
     </div>
-
     <div id="body" style="height: 100%; margin: 0px; padding: 0px; position: relative; overflow: auto; overflow-y: scroll;">
         <div id="frame-container"></div>
         <div id="client_w" style="height: 0px; margin: 0px; padding: 0px; overflow: hidden;"></div>
@@ -43,7 +42,7 @@
                         <div class="l1">
                             <a class="l1">汽车配件查询</a>
                             <div class="l2">
-                                <a data-name="search">按车型查询配件</a>
+                                <a data-name="search_by_xilie">按车型查询配件</a>
                                 <a>按车架号询配件</a>
                                 <a>按配件编码查询</a>
                                 <a>按车辆型号查询</a>
@@ -359,32 +358,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="page search" style="display: none;">
-                            <div class="type">
-                                <div class="tab">
-                                    <a class="by-xilie active">按车型查询</a>
-                                    <a class="by-vin">按车架号查询</a>
-                                    <a class="by-peijian-code">按配件编码查询</a>
-                                    <a class="by-chexin-code">按型号编码查询</a>
-                                </div>
-                                <div class="tab-panel">
-                                    <div class="by-xilie">
-                                        <table style="width: 100%;" class="fenlei-sel">
-                                            <tbody>
-                                                <tr class="rs1">
-                                                    <td><a class="btn s1 sel" style="display: block;" data-fun="guobie-sel" data-empty="请选择国别"><span class="value">请选择国别</span><span class="flag"></span></a></td>
-                                                    <td><a class="btn s1 sel disabled" style="display: block;" data-fun="pinpai-sel" data-empty="请选择品牌"><span class="value">请选择品牌</span><span class="flag"></span></a></td>
-                                                    <td><a class="btn s1 sel disabled" style="display: block;" data-fun="xilie-sel" data-empty="请选择系列"><span class="value">请选择系列</span><span class="flag"></span></a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="by-vin"></div>
-                                    <div class="by-peijian-code"></div>
-                                    <div class="by-chexin-code"></div>
+                        <div class="page search search_by_xilie" style="display: none;">
+                            <div class="tool fenlei-sel">
+                                <div>
+                                    <a class="btn s1 sel guobie" data-fun="guobie-sel" data-empty="请选择国别"><span class="value">请选择国别</span><span class="flag"></span></a><span class="t">〉</span>
+                                    <a class="btn s1 sel pinpai disabled" data-fun="pinpai-sel" data-empty="请选择品牌"><span class="value">请选择品牌</span><span class="flag"></span></a><span class="t">〉</span>
+                                    <a class="btn s1 sel xilie disabled" data-fun="xilie-sel" data-empty="请选择系列"><span class="value">请选择系列</span><span class="flag"></span></a>
+                                    <a class="btn s2" data-fun="search">搜索</a>
                                 </div>
                             </div>
-                            <div class="b1"></div>
+                            <div class="title-bar">配件分类</div>
+                            <div class="cls"></div>
+                            <div class="hr1"></div>
+                            <div class="title-bar">配件列表</div>
+                            <div class="result"></div>
+                            <div class="list-nav"></div>
                         </div>
                     </td>
                 </tr>
@@ -558,6 +546,29 @@
                 </div>
                 <div class="list"></div>
             </div>
+        </div>
+        <div data-res="search-cls-item">
+            <div class="item">
+                <a class="link"></a>
+                <div class=""></div>
+            </div>
+        </div>
+        <div data-res="search-result-item">
+            <div class="item">
+                <a class="img">
+                    <img /></a>
+                <a class="title"></a>
+                <div class="tool"><a class="btn s1 edit">编辑</a></div>
+            </div>
+        </div>
+        <div data-res="list-nav-link">
+            <a class="btn link"></a>
+        </div>
+        <div data-res="list-nav-preLinks">
+            <a class="btn pre-links">&lt;</a>
+        </div>
+        <div data-res="list-nav-nextLinks">
+            <a class="btn next-links">&gt;</a>
         </div>
     </div>
 </body>

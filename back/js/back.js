@@ -70,6 +70,33 @@
         }
     };
     var fn = {
+        search: {
+            pageSize: 10,
+            convertResult: function (result) {
+                var data = { list: [], group: [] }, group_dict = {};
+                data.group_dict = group_dict;
+                $.each(result, function (data, group_dict) {
+                    var item = { id: this.id, define_id: this.did };
+                    data.list.push(item);
+                    var v = fn.peijian.dict.find(this.did), cls = group_dict[v.cls.id];
+                    item.sort = v.child.sort;
+                    item.cls_sort = v.cls.sort;
+                    item.define = v.child;
+                    if (!cls) {
+                        data.group.push(cls = group_dict[v.cls.id] = { cls_id: v.cls.id, sort: v.cls.sort, cls: v.cls, list: [] });
+                    }
+                    cls.list.push(item);
+                }, [data, group_dict]);
+                data.list.sort(function (a, b) {
+                    return a.cls_sort > b.cls_sort ? 1 : a.cls_sort < b.cls_sort ? -1 : a.sort > b.sort ? 1 : a.sort < b.sort ? -1 : 0;
+                });
+                data.group = fn.data.sortData(data.group);
+                $.each(data.group, function () {
+                    this.list = fn.data.sortData(this.list);
+                });
+                return data;
+            }
+        },
         htmlRes: {
             cache: {},
             get: function (name) {
@@ -626,6 +653,7 @@
                     return arr;
                 },
                 find: function (childKey) {
+                    /// <summary>返回 {cls,child}</summary>
                     var r = { cls: null, child: null };
                     $.each(this.data, function (r, childKey) {
                         $.each(this.list, function (r, childKey) {
@@ -1772,7 +1800,7 @@
                 });
             }
         }),
-        search: fn.page.expand('搜索配件', 'search', {
+        search_by_xilie: fn.page.expand('按车系搜索配件', 'search_by_xilie', {
             init: function () {
                 if (this.base('init')) return true;
                 var page_elt = this.elt();
@@ -1780,7 +1808,7 @@
                     var tgt = $(e.currentTarget), page = e.data;
                     switch (tgt.attr('data-fun')) {
                         case 'search':
-
+                            page.search();
                             break;
                         case 'guobie-sel':
                             fn.fenlei.selectDlg(tgt, fn.fenlei.guobie.data);
@@ -1793,7 +1821,7 @@
                             break;
                     }
                 });
-                page_elt.find('.fenlei-sel:first').delegate('a.btn.sel', '_change', this, function (e, data) {
+                page_elt.find('.tool.fenlei-sel').delegate('a.btn.sel', '_change', this, function (e, data) {
                     var a = $(e.currentTarget), page = e.data;
                     switch (a.attr('data-fun')) {
                         case 'guobie-sel':
@@ -1824,11 +1852,89 @@
                     }
                 });
                 page_elt.children('div.type').children('div.tab').delegate('a', 'click', fn.tab.on_active);
+                page_elt.find('div.list-nav:first').delegate('a.link:not(.current)', 'click', this, function (e) {
+                    e.data.list($(e.currentTarget).data('index'));
+                });
                 return false;
             },
             guobie_current: fn.fenlei.guobie.current,
             pinpai_current: fn.fenlei.pinpai.current,
-            xilie_current: fn.fenlei.xilie.current
+            xilie_current: fn.fenlei.xilie.current,
+            page_size: fn.search.pageSize,
+            listType: function () {
+                var typeElt = this.elt().find('div.cls:first>div.item.active:first');
+                if (typeElt.size() === 0) return 0;
+                return parseInt(typeElt.attr('data-cls-id')) || 0;
+            },
+            list: function (i) {
+                if (i < 0) return;
+                var type = this.listType(), list;
+                if (type === 0) {
+                    list = this.data.list;
+                } else {
+                    list = this.data.group_dict[type];
+                }
+                var count = list.length, page_count = Math.ceil(count / this.page_size), showCount = 10;
+                if (i >= page_count) return;
+                var istart = i - Math.ceil(showCount / 2), iend = istart + showCount - 1;
+                if (istart < 0) {
+                    iend -= istart;
+                    istart = 0;
+                }
+                if (iend >= page_count) {
+                    istart -= iend - page_count + 1;
+                    if (istart < 0) istart = 0;
+                    iend = page_count - 1;
+                }
+                var elt = this.elt(), nav_panel = elt.find('div.list-nav:first'), a;
+                nav_panel.html('');
+                if (istart > 0) {
+                    nav_panel.append(fn.htmlRes.get('list-nav-preLinks'));
+                }
+                for (var j = istart; j <= iend; j++) {
+                    nav_panel.append(fn.htmlRes.get('list-nav-link'));
+                    nav_panel.children().last().text(j + 1).data('index', j).addClass(j == i ? 'current' : '');
+
+                }
+                if (iend < page_count - 1) {
+                    nav_panel.append(fn.htmlRes.get('list-nav-nextLinks'));
+                }
+
+
+                var panel = elt.find('div.result:first').html('');
+
+                var start = i * this.page_size, end = Math.min(start + this.page_size, count);
+                for (var j = start; j < end; j++) {
+                    panel.append(fn.htmlRes.get('search-result-item'));
+                    var itemElt = panel.children().last();
+                    itemElt.find('a.title:first').text(list[j].define.name);
+                    itemElt.find('a.img:first>img:first').error(function () { $(this).css('opacity', '0'); }).attr('src', '/peijian_images/a1.jpg');
+                }
+
+            },
+            search: function () {
+                var xilie_id = this.xilie_current();
+                if (!xilie_id || xilie_id <= 0) return false;
+                var elt = this.elt();
+                elt.find('div.result:first').html('');
+                elt.find('div.cls:first').html('');
+                win_begin_wait();
+                ajaxJson('search.php', function (list) {
+                    this.data = fn.search.convertResult(list);
+                    var elt = this.elt(), panel = elt.find('div.result:first'), cls_panel = elt.find('div.cls:first');
+                    $.each(this.data.group, function (panel) {
+                        cls_panel.append(fn.htmlRes.get('search-cls-item'));
+                        var div = cls_panel.children().last(), a = div.children('a').first();
+                        a.text(this.cls.name);
+                    }, [cls_panel]);
+                    this.list(0, 20);
+                }, {
+                    context: this,
+                    type: 'GET',
+                    data: { act: 'xilie', xilie_id: xilie_id },
+                    complete: win_end_wait
+                });
+            }
         })
     };
     var cfg = {
